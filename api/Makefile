@@ -15,5 +15,5 @@ venv:
 util:
 	ENV=local python utils.py
 
-uvicorn:
+start:
 	uvicorn main:app --reload
