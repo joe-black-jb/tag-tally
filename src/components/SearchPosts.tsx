@@ -109,7 +109,7 @@ const SearchPosts = () => {
           <div className="text-red-500">{dateErrorMessage}</div>
         )}
       </div>
-      <div>
+      <div className="mt-8">
         <Button title="ダウンロード" onClick={handleClickSearch} />
       </div>
       {fetchingData && <div className="mt-4">データを取得中...</div>}
