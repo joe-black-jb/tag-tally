@@ -103,7 +103,7 @@ const SearchPosts = () => {
         )}
       </div>
       <div>
-        <Button title="download" onClick={handleClickSearch} />
+        <Button title="ダウンロード" onClick={handleClickSearch} />
       </div>
       {errorMessage && <div className="text-red-500 mt-4">{errorMessage}</div>}
       {successMessage && (
