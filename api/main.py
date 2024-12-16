@@ -33,7 +33,8 @@ Returns:
     _type_: _description_
 """
 @app.get("/search")
-def sample(year: str = None, date: str = None, hashtag: str = None):
+def search_post_data(year: str = None, date: str = None, hashtag: str = None):
+    print("search_post_data start")
     year_date = year + "_" + date
     url = f"https://togetter.com/search?q={hashtag}&t=q"
     # URLをエンコード
