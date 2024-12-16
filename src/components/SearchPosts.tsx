@@ -13,6 +13,7 @@ const SearchPosts = () => {
   const [hashtagErrorMessage, setHashtagErrorMessage] = useState<string>("");
   const [dateErrorMessage, setDateErrorMessage] = useState<string>("");
   const [successMessage, setSuccessMessage] = useState<string>("");
+  const [fetchingData, setFetchingData] = useState<boolean>(false);
 
   const handleChangeTagName = (
     e: React.ChangeEvent<HTMLInputElement>
@@ -29,6 +30,8 @@ const SearchPosts = () => {
   };
 
   const handleClickSearch = async () => {
+    setSuccessMessage("");
+    setErrorMessage("");
     try {
       if (!tagName) {
         setHashtagErrorMessage("ハッシュタグ名を入力してください");
@@ -51,6 +54,7 @@ const SearchPosts = () => {
           year,
           date,
         };
+        setFetchingData(true);
         const response = await api.get("/search", {
           params,
         });
@@ -58,15 +62,17 @@ const SearchPosts = () => {
         console.log("postData: ", postData);
         if (!postData || (postData && postData.length === 0)) {
           setSuccessMessage("");
-          setErrorMessage("投稿データの取得に失敗しました");
+          setErrorMessage("データの取得に失敗しました");
           return;
         }
         // エクセルファイルの出力
         const fileName = `data_${year}_${date}.xlsx`;
         handleExportToExcel(postData, fileName);
+        setFetchingData(false);
       }
-      setSuccessMessage("投稿データの取得に成功しました");
+      setSuccessMessage("データの取得に成功しました");
       setErrorMessage("");
+      setFetchingData(false);
     } catch {
       // if (e instanceof AxiosError) {
       //   const message = e.response?.data?.detail;
@@ -76,7 +82,8 @@ const SearchPosts = () => {
       //   }
       // }
       setSuccessMessage("");
-      setErrorMessage("投稿データの取得に失敗しました");
+      setErrorMessage("データの取得に失敗しました");
+      setFetchingData(false);
       return;
     }
   };
@@ -105,6 +112,7 @@ const SearchPosts = () => {
       <div>
         <Button title="ダウンロード" onClick={handleClickSearch} />
       </div>
+      {fetchingData && <div className="mt-4">データを取得中...</div>}
       {errorMessage && <div className="text-red-500 mt-4">{errorMessage}</div>}
       {successMessage && (
         <div className="text-green-500 mt-4">{successMessage}</div>
