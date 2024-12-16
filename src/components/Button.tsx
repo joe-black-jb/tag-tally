@@ -7,7 +7,7 @@ const Button = (props: Props) => {
   const { title, onClick } = props;
   return (
     <button
-      className="bg-green-200 hover:bg-green-300 px-2 py-1 border border-gray-500 rounded-lg"
+      className="bg-blue-200 hover:bg-blue-300 px-2 py-1 border border-gray-500 rounded-lg"
       onClick={onClick}
     >
       {title}
